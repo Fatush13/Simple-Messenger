@@ -56,5 +56,8 @@ public class MainController {
 
         return "main";
     }
+    public static void pomc(String s){
+
+    }
 
 }
