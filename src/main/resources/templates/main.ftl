@@ -1,25 +1,30 @@
 <#import "parts/common.ftl" as c>
-<#import "parts/login.ftl" as l>
-<@c.page>
 
-<div>
-<@l.logout />
-<span><a href="/user">User list</a></span>
-</div>
-<div>
-    <form method="post" enctype="multipart/form-data">
-        <input type="text" name="text" placeholder="Enter message" />
-        <input type="text" name="tag" placeholder="Tag">
-        <input type="file" name="file">
-        <input type="hidden" name="_csrf" value="${_csrf.token}" />
-        <button type="submit">Add</button>
+<@c.page>
+<div class="form-row">
+   <div class="form-group col-md-6">
+    <form method="get" action="main" class="form-inline">
+        <input type="text" name="filter" class="form-control" value="${filter?ifExists}" placeholder="Search by tag">
+     <button type="submit" class="btn btn-primary ml-2">Search</button>
     </form>
+   </div>
 </div>
-<div>Message list</div>
-<form method="get" action="main">
-    <input type="text" name="filter" value="${filter?ifExists}">
-    <button type="submit">Find</button>
-</form>
+
+<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Add new Message
+</a>
+<div class="collapse" id="collapseExample">
+    <div class="form-group">
+        <form method="post" enctype="multipart/form-data">
+            <input type="text" class="form-control" name="text" placeholder="Enter message" />
+            <input type="text" class="form-control" name="tag" placeholder="Tag">
+            <input type="file" name="file">
+            <input type="hidden" name="_csrf" value="${_csrf.token}" />
+            <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+    </div>
+</div>
+
 <#list messages as message>
 <div>
     <b>${message.id}</b>
