@@ -14,5 +14,4 @@ public class ControllerUtils {
                 FieldError::getDefaultMessage);
         return bindingResult.getFieldErrors().stream().collect(collector);
     }
-
 }

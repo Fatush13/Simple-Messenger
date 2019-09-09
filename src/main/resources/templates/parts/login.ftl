@@ -32,7 +32,7 @@
         <div class="col-sm-6">
             <input type="password" name="password2"
                    class="form-control ${(password2Error??)?string('is-invalid', '')}"
-                   placeholder="Password"/>
+                   placeholder="Retype password"/>
             <#if password2Error??>
             <div class="invalid-feedback">
                 ${password2Error}
@@ -53,6 +53,14 @@
         </#if>
         </div>
     </div>
+    <div class="col-sm-6">
+        <div class="g-recaptcha" data-sitekey="6LdwB7cUAAAAAHJo5tkoSmSsUdn0dooU_VZEK5ig"></div>
+        <#if captchaError??>
+        <div class="alert alert-danger" role="alert">
+            ${CaptchaError}
+        </div>
+    </#if>
+    </div>
 </#if>
 <input type="hidden" name="_csrf" value="${_csrf.token}"/>
 <#if !isRegisterForm><a href="/registration">Add new user</a></#if>
@@ -63,6 +71,6 @@
 <#macro logout>
 <form action="/logout" method="post">
     <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-    <button class="btn btn-primary" type="submit">Sign Out</button>
+    <button class="btn btn-primary" type="submit">Sign Out </button>
 </form>
 </#macro>
