@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {   //enables spring security
     @Autowired
     private UserService userService;
 
@@ -28,20 +28,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception { //method defines which URL paths should be secured
         http
                 .authorizeRequests()
-                .antMatchers("/", "/registration", "/static/**", "/activate/*").permitAll()
-                .anyRequest().authenticated()
+                    .antMatchers("/", "/registration", "/static/**", "/activate/*").permitAll()     //dlja dannogo puti - polnyj dostup
+                 .anyRequest().authenticated()                                                              //dlja vseh prochih - trebuem autentifikacii
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
+                    .formLogin()        //vkljuchaem form login
+                    .loginPage("/login")        //ukazyvaem dlja nego mapping
+                 .permitAll()                     //razrewaem pol'zovatsja loginom vsem
                 .and()
-                .rememberMe()
+                    .rememberMe()
                 .and()
-                .logout()
-                .permitAll();
+                    .logout()
+                    .permitAll();
     }
 
     @Override

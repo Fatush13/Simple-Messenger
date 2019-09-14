@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
-    @Autowired
+    @Autowired          //allows Spring to resolve and inject collaborating beans into your bean
     private UserRepo userRepo;
 
     @Autowired

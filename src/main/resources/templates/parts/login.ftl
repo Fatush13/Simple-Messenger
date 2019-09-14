@@ -1,3 +1,5 @@
+<#include "security.ftl">
+
 <#macro login path isRegisterForm>
 <form action="${path}" method="post">
     <div class="form-group row">
@@ -32,7 +34,7 @@
         <div class="col-sm-6">
             <input type="password" name="password2"
                    class="form-control ${(password2Error??)?string('is-invalid', '')}"
-                   placeholder="Retype password"/>
+                   placeholder="Repeat password"/>
             <#if password2Error??>
             <div class="invalid-feedback">
                 ${password2Error}
@@ -63,7 +65,7 @@
     </div>
 </#if>
 <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-<#if !isRegisterForm><a href="/registration">Add new user</a></#if>
+<#if !isRegisterForm><a href="/registration"><span style="text-decoration: underline">Add new user</span></a></#if>
 <button class="btn btn-primary" type="submit"><#if isRegisterForm>Create<#else>Sign In</#if></button>
 </form>
 </#macro>
@@ -71,6 +73,6 @@
 <#macro logout>
 <form action="/logout" method="post">
     <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-    <button class="btn btn-primary" type="submit">Sign Out </button>
+    <button class="btn btn-primary" type="submit"><#if user??>Sign Out<#else>Sign in</#if></button>
 </form>
 </#macro>

@@ -54,12 +54,12 @@ public class MainController {
             @AuthenticationPrincipal User user,
             @Valid Message message,
             BindingResult bindingResult,
-             Model model,
+            Model model,
             @RequestParam("file") MultipartFile file
     ) throws IOException {
         message.setAuthor(user);
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
 
             model.mergeAttributes(errorsMap);
@@ -84,9 +84,9 @@ public class MainController {
             messageRepo.save(message);
         }
 
-            Iterable<Message> messages = messageRepo.findAll();
+        Iterable<Message> messages = messageRepo.findAll();
 
-            model.addAttribute("messages", messages);
+        model.addAttribute("messages", messages);
 
         return "main";
     }

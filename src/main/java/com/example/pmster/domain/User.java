@@ -9,11 +9,11 @@ import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Set;
 
-@Entity
-@Table(name = "usr")
+@Entity                                                 // This tells Hibernate what should be persisted in database
+@Table(name = "usr")                                    // назначает название таблицы базы данных
 public class User implements UserDetails {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id                                                 //points out that this is a primary key in table
+    @GeneratedValue(strategy = GenerationType.AUTO)     //настройка способа увеличения указанного столбца (поля)
     private Long id;
     @NotBlank(message = "Username cannot be empty")
     private String username;
@@ -27,9 +27,9 @@ public class User implements UserDetails {
     private String email;
     private String activationCode;
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
-    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER) //eager fetchType podgruzit roli srazu pri zaprose polzovatelja, a ne po obhodimosti samih rolej
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))           //collectiontable - dannye budut hranitsja v otdelnoj tablice, dlja kotoroj ne opisan mapping
+    @Enumerated(EnumType.STRING)        //указывает, что свойство должно обрабатываться как перечисление.
     private Set<Role> roles;
 
     public boolean isAdmin() {

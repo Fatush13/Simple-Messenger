@@ -24,7 +24,7 @@ import java.util.Map;
 public class RegistrationController {
     private final static String CAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s";
 
-    @Autowired
+    @Autowired                              //позволяет Spring разрешать и вводить взаимодействующие bean-компоненты в ваш bean-компонент
     private UserService userService;
 
     @Value("${recaptcha.secret}")
@@ -41,7 +41,7 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String addUser(
-            @RequestParam("password2") String passwordConfirm,
+            @RequestParam("password2") String passwordConfirm,                      //@ReqPar means it is a parameter from the GET or POST request
             @RequestParam("g-recaptcha-response") String captchaResponse,
             @Valid User user,
             BindingResult bindingResult,

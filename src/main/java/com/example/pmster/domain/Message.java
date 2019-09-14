@@ -11,19 +11,19 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank(message = "Please type in your message")
+    @NotBlank(message = "Please type in your message")      //must be not null and the trimmed length must be greater than zero
     @Length(max = 2048, message = "Message is too long(>2048)")
     private String text;
     @Length(max = 255, message = "Message is too long (>255)")
     private String tag;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)     //ukazyvaet, chto polju author sootvetstvuet mnozhestvo soobwenij
     @JoinColumn(name = "user_id")
     private User author;
 
     private String filename;
 
-    public Message() {
+    public Message() {      //pustoj konstruktor dlja @Entity
     }
 
     public Message(String text, String tag, User user) {

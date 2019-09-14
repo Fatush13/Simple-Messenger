@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/user")            //мапинг с URL для всего класса, методам не придётся подписывать мапинг
 public class UserController {
     @Autowired
     private UserService userService;
@@ -28,7 +28,7 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("{user}")
-    public String userEditFrom(@PathVariable User user, Model model) {
+    public String userEditForm(@PathVariable User user, Model model) {
         model.addAttribute("user", user);
         model.addAttribute("roles", Role.values());
         return "userEdit";
