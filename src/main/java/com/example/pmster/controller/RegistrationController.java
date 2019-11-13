@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
@@ -41,7 +40,7 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String addUser(
-            @RequestParam("password2") String passwordConfirm,                      //@ReqPar means it is a parameter from the GET or POST request
+            @RequestParam("password2") String passwordConfirm,                      //@ReqParam means it is a parameter from the GET or POST request
             @RequestParam("g-recaptcha-response") String captchaResponse,
             @Valid User user,
             BindingResult bindingResult,
@@ -54,6 +53,7 @@ public class RegistrationController {
         }
 
         boolean isConfirmEmpty = StringUtils.isEmpty(passwordConfirm);
+
         if(isConfirmEmpty){
             model.addAttribute("password2Error", "Password confirmation cannot be empty");
         }
@@ -69,6 +69,7 @@ public class RegistrationController {
             return "registration";
 
         }
+
         if (!userService.addUser(user)) {
             model.addAttribute("usernameError", "User exists!");
             return "registration";

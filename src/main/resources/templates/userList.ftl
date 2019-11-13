@@ -1,8 +1,9 @@
 <#import "parts/common.ftl" as c>
 
+
 <@c.page>
 
-<table class="table table-bordered table-striped table-hover">
+<table class="table table-bordered table-striped table-hover" xmlns:text-decoration="http://www.w3.org/1999/xhtml">      <!--striped- razdelenie strok cvetov, hover- vydelenie vybrannoj jachejki cvetom-->
     <thead>
     <tr>
         <th class="text-center" colspan="6"><font size="5">List of users</font></th>
@@ -17,9 +18,9 @@
     <#list users as user>
         <tr>
             <td>${user.username}</td>
-            <td><#list user.roles as role>${role}<#sep>, </#list></td>
-            <td><a href="/user/${user.id}"><p style="text-decoration: underline"><b>edit</b></p></a> </td>
-        </tr>
+            <td><#list user.roles as role>${role}<#sep>, </#list></td>      <!--sep"," - separator, razdeljajuwij zapjatoj-->
+            <td><a href="/user/${user.id}"><span style="text-decoration: underline"><b>edit</b></span></a></td>  <!--krasoty radi, vyvodjatsja s nizhnim podcherkivaniem-->
+    </tr>
     </#list>
     </tbody>
 </table>

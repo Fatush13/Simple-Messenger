@@ -8,7 +8,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
-@Configuration
+@Configuration          //class is a source of bean definitions
 public class MailConfig {
     @Value("${spring.mail.host}")
     private String host;

@@ -27,8 +27,10 @@ public class User implements UserDetails {
     private String email;
     private String activationCode;
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER) //eager fetchType podgruzit roli srazu pri zaprose polzovatelja, a ne po obhodimosti samih rolej
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))           //collectiontable - dannye budut hranitsja v otdelnoj tablice, dlja kotoroj ne opisan mapping
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    //eager fetchType podgruzit roli srazu pri zaprose polzovatelja, a ne po obhodimosti samih rolej
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    //collectiontable - dannye budut hranitsja v otdelnoj tablice, dlja kotoroj ne opisan mapping
     @Enumerated(EnumType.STRING)        //указывает, что свойство должно обрабатываться как перечисление.
     private Set<Role> roles;
 
@@ -116,4 +118,5 @@ public class User implements UserDetails {
     public void setActivationCode(String activationCode) {
         this.activationCode = activationCode;
     }
+
 }
