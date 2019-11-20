@@ -3,6 +3,8 @@ package com.example.pmster.controller;
 import com.example.pmster.domain.User;
 import com.example.pmster.domain.dto.CaptchaResponseDto;
 import com.example.pmster.service.UserService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ import java.util.Map;
 
 @Controller
 public class RegistrationController {
+    private static final Logger logger = LogManager.getLogger(RegistrationController.class);
     private final static String CAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s";
 
     @Autowired                              //позволяет Spring разрешать и вводить взаимодействующие bean-компоненты в ваш bean-компонент
@@ -50,6 +53,7 @@ public class RegistrationController {
 
         if(!response.isSuccess()){
             model.addAttribute("captchaError", "Fill captcha");
+            logger.warn("Captcha error occurred");
         }
 
         boolean isConfirmEmpty = StringUtils.isEmpty(passwordConfirm);
@@ -60,6 +64,7 @@ public class RegistrationController {
 
         if(user.getPassword() != null && !user.getPassword().equals(passwordConfirm)){
             model.addAttribute("passwordError", "Passwords are different!");
+
         }
 
         if(isConfirmEmpty || bindingResult.hasErrors() || !response.isSuccess()){
@@ -85,9 +90,11 @@ public class RegistrationController {
         if (isActivated) {
             model.addAttribute("messageType", "success");
             model.addAttribute("message", "User successfully activated");
+            logger.info("New user has been successfully added");
         } else {
             model.addAttribute("messageType", "danger");
             model.addAttribute("message", "Activation code is not found!");
+            logger.warn("Invalid activation code");
         }
 
         return "login";

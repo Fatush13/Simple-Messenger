@@ -3,6 +3,8 @@ package com.example.pmster.service;
 import com.example.pmster.domain.Role;
 import com.example.pmster.domain.User;
 import com.example.pmster.repos.UserRepo;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,6 +18,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
+    private static final Logger logger = LogManager.getLogger(UserService.class);
+
     @Autowired          //allows Spring to resolve and inject collaborating beans into your bean
     private UserRepo userRepo;
 
@@ -52,6 +56,7 @@ public class UserService implements UserDetailsService {
 
         sendMessage(user);
 
+        logger.info("Activation message has been sent");
 
         return true;
     }
@@ -77,8 +82,9 @@ public class UserService implements UserDetailsService {
         }
 
         user.setActive(true);
-
         user.setActivationCode(null);
+
+        logger.info("User" + user.getUsername() + "has been activated");
 
         userRepo.save(user);
 
@@ -113,6 +119,7 @@ public class UserService implements UserDetailsService {
                 (userEmail != null && !userEmail.equals(email));
 
         if (isEmailChanged) {
+            sendMessage(user);
             user.setEmail(email);
 
             if (!StringUtils.isEmpty(email)) {
@@ -126,8 +133,6 @@ public class UserService implements UserDetailsService {
 
         userRepo.save(user);
 
-        if (isEmailChanged) {
-            sendMessage(user);
-        }
+        logger.info("User " + user.getUsername() + "has updated profile");
     }
 }

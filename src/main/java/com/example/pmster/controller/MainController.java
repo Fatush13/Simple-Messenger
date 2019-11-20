@@ -3,6 +3,8 @@ package com.example.pmster.controller;
 import com.example.pmster.domain.Message;
 import com.example.pmster.domain.User;
 import com.example.pmster.repos.MessageRepo;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,6 +24,8 @@ import java.util.UUID;
 
 @Controller
 public class MainController {
+    private static final Logger logger = LogManager.getLogger(MainController.class);
+
     @Autowired
     private MessageRepo messageRepo;
 
@@ -82,6 +86,7 @@ public class MainController {
 
             model.addAttribute("message", null);
             messageRepo.save(message);
+            logger.info("New message has been added");
         }
 
         Iterable<Message> messages = messageRepo.findAll();
