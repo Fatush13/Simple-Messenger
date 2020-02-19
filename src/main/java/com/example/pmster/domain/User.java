@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Set;
 
 @Entity                                                 // This tells Hibernate what should be persisted in database
-@Table(name = "usr")                                    // назначает название таблицы базы данных
+@Table(name = "usr")// назначает название таблицы базы данных
 public class User implements UserDetails {
     @Id                                                 //points out that this is a primary key in table
     @GeneratedValue(strategy = GenerationType.AUTO)     //настройка способа увеличения указанного столбца (поля)

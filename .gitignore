@@ -3,3 +3,4 @@ src/test/
 target/
 uploads/
 
+/src/main/resources/logs/log_file.log
