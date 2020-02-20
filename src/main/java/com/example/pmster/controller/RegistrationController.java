@@ -26,14 +26,15 @@ public class RegistrationController {
     private static final Logger logger = LogManager.getLogger(RegistrationController.class);
     private final static String CAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s";
 
-    @Autowired                              //позволяет Spring разрешать и вводить взаимодействующие bean-компоненты в ваш bean-компонент
+    @Autowired
+    //позволяет Spring разрешать и вводить взаимодействующие bean-компоненты в ваш bean-компонент
     private UserService userService;
 
     @Value("${recaptcha.secret}")
     private String secret;
 
     @Autowired
-     private RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
 
     @GetMapping("/registration")
@@ -51,23 +52,23 @@ public class RegistrationController {
         String url = String.format(CAPTCHA_URL, secret, captchaResponse);
         CaptchaResponseDto response = restTemplate.postForObject(url, Collections.emptyList(), CaptchaResponseDto.class);
 
-        if(!response.isSuccess()){
+        if (!response.isSuccess()) {
             model.addAttribute("captchaError", "Fill captcha");
-            logger.warn("Captcha error occurred");
+            logger.error("Captcha error occurred");
         }
 
         boolean isConfirmEmpty = StringUtils.isEmpty(passwordConfirm);
 
-        if(isConfirmEmpty){
+        if (isConfirmEmpty) {
             model.addAttribute("password2Error", "Password confirmation cannot be empty");
         }
 
-        if(user.getPassword() != null && !user.getPassword().equals(passwordConfirm)){
+        if (user.getPassword() != null && !user.getPassword().equals(passwordConfirm)) {
             model.addAttribute("passwordError", "Passwords are different!");
 
         }
 
-        if(isConfirmEmpty || bindingResult.hasErrors() || !response.isSuccess()){
+        if (isConfirmEmpty || bindingResult.hasErrors() || !response.isSuccess()) {
             Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
 
             model.mergeAttributes(errors);
@@ -90,11 +91,11 @@ public class RegistrationController {
         if (isActivated) {
             model.addAttribute("messageType", "success");
             model.addAttribute("message", "User successfully activated");
-            logger.info("New user has been successfully added");
+            logger.warn("New user has been successfully added");
         } else {
             model.addAttribute("messageType", "danger");
             model.addAttribute("message", "Activation code is not found!");
-            logger.warn("Invalid activation code");
+            logger.error("Invalid activation code");
         }
 
         return "login";

@@ -30,5 +30,4 @@ public class MvcConfig implements WebMvcConfigurer {        //klass soderzhit ko
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
     }
-
 }
