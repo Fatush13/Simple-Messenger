@@ -4,9 +4,10 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 @Entity
-public class Message {
+public class Message implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -23,8 +24,8 @@ public class Message {
 
     private String filename;
 
-    public Message() {      //pustoj konstruktor dlja @Entity
-    }
+    public Message() {
+    }    //pustoj konstruktor dlja @Entity
 
     public Message(String text, String tag, User user) {
         this.author = user;

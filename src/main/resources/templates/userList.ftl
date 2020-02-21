@@ -6,7 +6,7 @@
 <table class="table table-bordered table-striped table-hover" xmlns:text-decoration="http://www.w3.org/1999/xhtml">      <!--striped- razdelenie strok cvetov, hover- vydelenie vybrannoj jachejki cvetom-->
     <thead>
     <tr>
-        <th class="text-center" colspan="6"><font size="5">List of users</font></th>
+        <th class="text-center" colspan="6"><span style="font-size: large; ">List of users</span></th>
     </tr>
     <tr>
         <th>Name&nbsp;</th>

@@ -56,8 +56,6 @@ public class UserService implements UserDetailsService {
 
         sendMessage(user);
 
-        logger.info("Activation message has been sent");
-
         return true;
     }
 
@@ -71,6 +69,8 @@ public class UserService implements UserDetailsService {
             );
 
             mailSender.send(user.getEmail(), "Activation code", message);
+
+            logger.warn("Activation message has been sent");
         }
     }
 
@@ -84,7 +84,7 @@ public class UserService implements UserDetailsService {
         user.setActive(true);
         user.setActivationCode(null);
 
-        logger.info("User" + user.getUsername() + "has been activated");
+        logger.warn("User" + user.getUsername() + "has been activated");
 
         userRepo.save(user);
 
@@ -133,6 +133,22 @@ public class UserService implements UserDetailsService {
 
         userRepo.save(user);
 
-        logger.info("User " + user.getUsername() + "has updated profile");
+        logger.warn("User " + user.getUsername() + "has updated profile");
+    }
+
+    public void subscribe(User currentUser, User user) {
+        user.getSubscribers().add(currentUser);
+
+        userRepo.save(user);
+
+        logger.warn(user.getUsername() + " has subscribed to " + currentUser.getUsername());
+    }
+
+    public void unsubscribe(User currentUser, User user) {
+        user.getSubscribers().remove(currentUser);
+
+        userRepo.save(user);
+
+        logger.warn(user.getUsername() + " has unsubscribed from " + currentUser.getUsername());
     }
 }

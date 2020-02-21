@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -30,13 +31,33 @@ public class User implements UserDetails {
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     //eager fetchType podgruzit roli srazu pri zaprose polzovatelja, a ne po obhodimosti samih rolej
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
-    //collectiontable - dannye budut hranitsja v otdelnoj tablice, dlja kotoroj ne opisan mapping
+    @CollectionTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"))
+    //collectionTable - dannye budut hranitsja v otdelnoj tablice, dlja kotoroj ne opisan mapping
+
     @Enumerated(EnumType.STRING)        //указывает, что свойство должно обрабатываться как перечисление.
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //Cascade duplicates actions from one entity to another
     private Set<Message> messages;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_subscriptions",
+            joinColumns = {@JoinColumn(name = "channel_id")},
+            inverseJoinColumns = {@JoinColumn(name = "subscriber_id")}
+    )
+    private Set<User> subscribers = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_subscriptions",
+            joinColumns = {@JoinColumn(name = "subscriber_id")},
+            inverseJoinColumns = {@JoinColumn(name = "channel_id")}
+    )
+    private Set<User> subscriptions = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
@@ -124,6 +145,22 @@ public class User implements UserDetails {
         return roles;
     }
 
+    public Set<User> getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(Set<User> subscribers) {
+        this.subscribers = subscribers;
+    }
+
+    public Set<User> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(Set<User> subscriptions) {
+        this.subscriptions = subscriptions;
+    }
+
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
@@ -143,5 +180,4 @@ public class User implements UserDetails {
     public void setActivationCode(String activationCode) {
         this.activationCode = activationCode;
     }
-
 }

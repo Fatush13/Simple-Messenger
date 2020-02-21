@@ -8,7 +8,7 @@
             </#if>
             <div class="m-2">
                 <span>${message.text}</span>
-                <i>${message.tag}</i>
+                <p><i>#${message.tag}</i></p>
             </div>
             <div class="card-footer text-muted">
                 <a href="/user-messages/${message.author.id}">${message.authorName}</a>

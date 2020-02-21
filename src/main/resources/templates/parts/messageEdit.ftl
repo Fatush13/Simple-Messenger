@@ -1,4 +1,4 @@
-<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+<a class="btn btn-primary mt-3" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
    aria-controls="collapseExample">
     <#if springMacroRequestContext.requestUri?contains("/main")>
         Add new message
@@ -37,7 +37,7 @@
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <input type="hidden" name="id" value="<#if message??>${message.id}</#if>"/>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Save message</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
         </form>
     </div>
