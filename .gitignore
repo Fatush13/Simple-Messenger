@@ -1,6 +1,5 @@
 /.idea/
-src/test/
 target/
-uploads/
+uploads/*
 
-/src/main/resources/logs/
+/src/main/resources/logs/*
