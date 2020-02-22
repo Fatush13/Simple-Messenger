@@ -27,4 +27,6 @@
     </#list>
 </div>
 
-<@p.pager url page />
+<#if page.getNumberOfElements() gt 5>
+    <@p.pager url page />
+</#if>
