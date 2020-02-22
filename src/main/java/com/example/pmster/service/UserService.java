@@ -63,7 +63,8 @@ public class UserService implements UserDetailsService {
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
                     "Hello, %s! \n" +
-                            "Welcome to PMster! Please, visit next link: http://localhost:8080/activate/%s",
+                            "Welcome to PMster! Please, visit next link: <a href='http://localhost:1234/activate/%s'" +
+                            "target='blank'>Activation</a>",
                     user.getUsername(),
                     user.getActivationCode()
             );
