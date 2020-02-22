@@ -19,10 +19,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {   //enable
     @Autowired
     private UserService userService;
 
-    @Autowired PasswordEncoder passwordEncoder;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Bean
-    public PasswordEncoder getPasswordEncoder(){
+    public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder(8);
     }
 
@@ -30,17 +31,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {   //enable
     protected void configure(HttpSecurity http) throws Exception { //method defines which URL paths should be secured
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/registration", "/static/**", "/activate/*").permitAll()     //dlja dannogo puti - polnyj dostup
-                 .anyRequest().authenticated()                                                              //dlja vseh prochih - trebuem autentifikacii
+                .antMatchers("/", "/registration", "/static/**", "/activate/*").permitAll()     //grant access for this path for all
+                .anyRequest().authenticated()                                                              //require authorization for other paths
                 .and()
-                    .formLogin()        //vkljuchaem form login
-                    .loginPage("/login")        //ukazyvaem dlja nego mapping
-                 .permitAll()                     //razrewaem pol'zovatsja loginom vsem
+                .formLogin()        //enable login form
+                .loginPage("/login")        //and indicate path for it
+                .permitAll()                     //grant access to login for all
                 .and()
-                    .rememberMe()
+                .rememberMe()
                 .and()
-                    .logout()
-                    .permitAll();
+                .logout()
+                .permitAll();
     }
 
     @Override

@@ -10,12 +10,12 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class MvcConfig implements WebMvcConfigurer {        //klass soderzhit konfiguraciju veb sloja
+public class MvcConfig implements WebMvcConfigurer {        //containt webl ayer configuration
     @Value("${upload.path}")
     private String uploadPath;
 
     @Bean
-    public RestTemplate getRestTemplate(){
+    public RestTemplate getRestTemplate() {
         return new RestTemplate();
     }
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/user")            //мапинг с URL для всего класса, методам не придётся подписывать мапинг
+@RequestMapping("/user")            //mapping with url for whole class, thus methods get it as default
 public class UserController {
     @Autowired
     private UserService userService;

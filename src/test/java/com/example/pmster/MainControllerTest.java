@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc   //Mock imitates mvc layer
 @WithUserDetails("123")
 @TestPropertySource("/application-test.properties")
 @Sql(value = {"/prepare-user-before.sql", "/prepare-message-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
@@ -30,14 +30,6 @@ public class MainControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Test
-    public void navbarLoginTest() throws Exception {
-        this.mockMvc.perform(get("/main"))
-                .andDo(print())
-                .andExpect(authenticated())
-                .andExpect(xpath("//div[@id='navbarSupportedContent']/div").string("123"));
-    }
 
     @Test
     public void messageListTest() throws Exception {

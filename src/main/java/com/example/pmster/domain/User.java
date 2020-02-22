@@ -12,10 +12,10 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity                                                 // This tells Hibernate what should be persisted in database
-@Table(name = "usr")// назначает название таблицы базы данных
+@Table(name = "usr")// sets name for the table
 public class User implements UserDetails {
     @Id                                                 //points out that this is a primary key in table
-    @GeneratedValue(strategy = GenerationType.AUTO)     //настройка способа увеличения указанного столбца (поля)
+    @GeneratedValue(strategy = GenerationType.AUTO)     //enables auto incrementation for this column
     private Long id;
     @NotBlank(message = "Username cannot be empty")
     private String username;
@@ -30,13 +30,13 @@ public class User implements UserDetails {
     private String activationCode;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    //eager fetchType podgruzit roli srazu pri zaprose polzovatelja, a ne po obhodimosti samih rolej
+    //eager fetchType loads roles right after user requests
     @CollectionTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"))
-    //collectionTable - dannye budut hranitsja v otdelnoj tablice, dlja kotoroj ne opisan mapping
+    //collectionTable - data will be stored in a separate table, for which mapping isn't described
 
-    @Enumerated(EnumType.STRING)        //указывает, что свойство должно обрабатываться как перечисление.
+    @Enumerated(EnumType.STRING)        //property must be processed as enumeration
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

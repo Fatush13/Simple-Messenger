@@ -7,7 +7,7 @@
     <title>pmster</title>
     <link rel="stylesheet" href="/static/style.css"/>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>  <!--nastrojka viewporta dlja mob. ustrojstv pod shirinu ustrojstva i iznachal'nogo masshtaba - 100%-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>  <!--viewport configuration for mobile devices that fits its width and prescaled as  - 100%-->
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
