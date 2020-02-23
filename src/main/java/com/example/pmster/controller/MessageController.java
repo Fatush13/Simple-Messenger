@@ -7,6 +7,10 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +44,8 @@ public class MessageController {
             @Valid Message message,
             BindingResult bindingResult,
             Model model,
-            @RequestParam("file") MultipartFile file
+            @RequestParam("file") MultipartFile file,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageble
     ) throws IOException {
         message.setAuthor(user);
 
@@ -57,8 +62,12 @@ public class MessageController {
             logger.warn("New message has been added by " + message.getAuthorName() + " : " + message.getText());
         }
 
+        Page<Message> page;
+        page = messageRepo.findByAuthor(user, pageble);
         Iterable<Message> messages = messageRepo.findAll();
 
+        model.addAttribute("url", "/main");
+        model.addAttribute("page", page);
         model.addAttribute("messages", messages);
 
         return "main";

@@ -43,9 +43,8 @@ public class MainController {
             page = messageRepo.findAll(pageable);
         }
         model.addAttribute("page", page);
-        model.addAttribute("url", "/main");
         model.addAttribute("filter", filter);
-
+        model.addAttribute("url", "/main");
         return "main";
     }
 
@@ -54,9 +53,12 @@ public class MainController {
             @AuthenticationPrincipal User currentUser,  //In case of authentication request with username and password, this would be the username
             @PathVariable User user,
             Model model,
-            @RequestParam(required = false) Message message
+            @RequestParam(required = false) Message message,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
+        Page<Message> page;
         Set<Message> messages = user.getMessages();
+        page = messageRepo.findByAuthor(user, pageable);
 
         model.addAttribute("userChannel", user);
         model.addAttribute("subscriptionsCount", user.getSubscriptions().size());
@@ -64,6 +66,8 @@ public class MainController {
         model.addAttribute("isSubscriber", user.getSubscribers().contains(currentUser));
         model.addAttribute("messages", messages);
         model.addAttribute("message", message);
+        model.addAttribute("page", page);
+        model.addAttribute("url", "/user-messages/" + user.getId());
         model.addAttribute("isCurrentUser", currentUser.equals(user));
 
         return "userMessages";
